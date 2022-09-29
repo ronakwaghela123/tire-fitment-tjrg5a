@@ -1,0 +1,169 @@
+<section class="tire-fitment">
+  <div class="tire-fitment__content text-center">
+    <h1 class="tire-fitment__title">Tire fitment engine</h1>
+    <button
+      class="btn btn-primary tire-fitment__btn mt-2"
+      data-bs-toggle="modal"
+      data-bs-target="#tireFitmentModal"
+    >
+      Select vehicle
+    </button>
+  </div>
+</section>
+
+<div
+  class="modal fade"
+  id="tireFitmentModal"
+  tabindex="-1"
+  aria-labelledby="tireFitmentModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="tireFitmentModalLabel">Tire Fitment</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <ul class="nav nav-pills" id="myTab" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button
+              class="nav-link active"
+              id="year-tab"
+              data-bs-toggle="tab"
+              data-bs-target="#year-tab-pane"
+              type="button"
+              role="tab"
+              aria-controls="year-tab-pane"
+              aria-selected="true"
+              (click)="getYears()"
+            >
+              Year
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button
+              class="nav-link"
+              id="make-tab"
+              data-bs-toggle="tab"
+              data-bs-target="#make-tab-pane"
+              type="button"
+              role="tab"
+              aria-controls="make-tab-pane"
+              aria-selected="false"
+            >
+              Make
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button
+              class="nav-link"
+              id="model-tab"
+              data-bs-toggle="tab"
+              data-bs-target="#model-tab-pane"
+              type="button"
+              role="tab"
+              aria-controls="model-tab-pane"
+              aria-selected="false"
+            >
+              Model
+            </button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button
+              class="nav-link"
+              id="trim-tab"
+              data-bs-toggle="tab"
+              data-bs-target="#trim-tab-pane"
+              type="button"
+              role="tab"
+              aria-controls="trim-tab-pane"
+              aria-selected="false"
+            >
+              Trim
+            </button>
+          </li>
+        </ul>
+        <div class="tab-content p-2" id="myTabContent">
+          <div
+            class="tab-pane fade show active"
+            id="year-tab-pane"
+            role="tabpanel"
+            aria-labelledby="year-tab"
+            tabindex="0"
+          >
+            <div class="row">
+              <div class="col-3" *ngFor="let year of yearList">
+                <h5
+                  (click)="onSelectFitment(year, 'year')"
+                  role="button"
+                  class="year-no"
+                >
+                  {{ year }}
+                </h5>
+              </div>
+            </div>
+          </div>
+          <div
+            class="tab-pane fade"
+            id="make-tab-pane"
+            role="tabpanel"
+            aria-labelledby="make-tab"
+            tabindex="0"
+          >
+            <div class="row">
+              <div class="col-3" *ngFor="let make of makeList">
+                <h5
+                  (click)="onSelectFitment(make, 'make')"
+                  role="button"
+                  class="make-no"
+                >
+                  {{ make }}
+                </h5>
+              </div>
+            </div>
+          </div>
+          <div
+            class="tab-pane fade"
+            id="model-tab-pane"
+            role="tabpanel"
+            aria-labelledby="model-tab"
+            tabindex="0"
+          >
+            <div class="row">
+              <div class="col-3" *ngFor="let models of modelsList">
+                <h5
+                  (click)="onSelectFitment(models, 'models')"
+                  role="button"
+                  class="models-no"
+                >
+                  {{ models }}
+                </h5>
+              </div>
+            </div>
+          </div>
+          <div
+            class="tab-pane fade"
+            id="trim-tab-pane"
+            role="tabpanel"
+            aria-labelledby="trim-tab"
+            tabindex="0"
+          >
+            ...
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
