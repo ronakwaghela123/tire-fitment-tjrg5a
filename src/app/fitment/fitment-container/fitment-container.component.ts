@@ -12,6 +12,8 @@ export class FitmentContainerComponent implements OnInit {
   public makeList: Array<any> = [];
   public modelsList: Array<any> = [];
   public trimList: Array<any> = [];
+  public selectedFitmentData: Array<any> = [];
+  public isTabActive: string = 'year';
   private _tire_fitment_subscription: Subscription = new Subscription();
   constructor(private _tireFitmentService: TireFitmentService) {}
 
@@ -25,7 +27,6 @@ export class FitmentContainerComponent implements OnInit {
         if (response.success === true && response.year.length > 0) {
           this.yearList = response.year;
         }
-        console.log(response);
       })
     );
   }
@@ -41,7 +42,6 @@ export class FitmentContainerComponent implements OnInit {
           if (response.success === true && response.make.length > 0) {
             this.makeList = response.make;
           }
-          console.log(response);
         })
     );
   }
@@ -50,12 +50,13 @@ export class FitmentContainerComponent implements OnInit {
       make: data,
     };
     this._tire_fitment_subscription.add(
-      this._tireFitmentService.getModals('').subscribe((response: any) => {
-        if (response.success === true && response.model.length > 0) {
-          this.modelsList = response.model;
-        }
-        console.log(response);
-      })
+      this._tireFitmentService
+        .getModals(requestParam)
+        .subscribe((response: any) => {
+          if (response.success === true && response.model.length > 0) {
+            this.modelsList = response.model;
+          }
+        })
     );
   }
   public getTrim(data) {
@@ -66,15 +67,16 @@ export class FitmentContainerComponent implements OnInit {
       this._tireFitmentService
         .getTrim(requestParam)
         .subscribe((response: any) => {
-          // if (response.success === true && response.year.length > 0) {
-          //   this.yearList = response.year;
-          // }
-          console.log(response);
+          if (response.success === true && response.trim.length > 0) {
+            this.trimList = response.trim;
+          }
         })
     );
   }
 
-  public onSelectFitment(data, type) {
+  public onSelectFitment(data, type, nextType) {
+    this.selectedFitmentData.push(data);
+    this.isTabActive = nextType;
     if (type === 'year') {
       this.getMake(data);
     } else if (type === 'make') {
@@ -82,6 +84,11 @@ export class FitmentContainerComponent implements OnInit {
     } else if (type === 'models') {
       this.getTrim(data);
     }
+  }
+
+  public resetFitment() {
+    this.selectedFitmentData = [];
+    this.isTabActive = 'year';
   }
 
   // Make with year (2021)
