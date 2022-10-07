@@ -9,7 +9,8 @@ export class TireFitmentService {
   private _url = Url;
   constructor(private _httpService: HttpService) {}
 
-  public getYears(): Observable<Array<any>> {
+  public getYears(): Observable<any> {
+    console.log('in');
     return this._httpService.getData(this._url.GET_YEARS_URL).pipe(
       map((response: any) => {
         return response;

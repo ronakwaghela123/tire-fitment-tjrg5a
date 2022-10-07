@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { Observable, Subscription } from 'rxjs';
 import { TireFitmentService } from '../service/tire-fitment.service';
+import * as fromVehicle from '../store/actions/vehicle.action';
 
 @Component({
   selector: 'app-fitment-container',
@@ -14,21 +16,29 @@ export class FitmentContainerComponent implements OnInit {
   public trimList: Array<any> = [];
   public selectedFitmentData: Array<any> = [];
   public isTabActive: string = 'year';
+  public todo$: Observable<any>;
   private _tire_fitment_subscription: Subscription = new Subscription();
-  constructor(private _tireFitmentService: TireFitmentService) {}
+  constructor(
+    private _tireFitmentService: TireFitmentService,
+    private store: Store<{ vehicle: any }>
+  ) {
+    store.select('vehicle').subscribe((data) => console.log(data));
+    console.log(this.todo$);
+  }
 
   ngOnInit() {
     this.getYears();
   }
 
   public getYears() {
-    this._tire_fitment_subscription.add(
-      this._tireFitmentService.getYears().subscribe((response: any) => {
-        if (response.success === true && response.year.length > 0) {
-          this.yearList = response.year;
-        }
-      })
-    );
+    this.store.dispatch(fromVehicle.GetYearAction());
+    // this._tire_fitment_subscription.add(
+    //   this._tireFitmentService.getYears().subscribe((response: any) => {
+    //     if (response.success === true && response.year.length > 0) {
+    //       this.yearList = response.year;
+    //     }
+    //   })
+    // );
   }
 
   public getMake(data) {

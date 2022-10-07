@@ -1,4 +1,4 @@
-import { Action } from '@ngrx/store';
+import { Action, createAction, props } from '@ngrx/store';
 // import model/interface from db.json here...
 
 // Action constants
@@ -12,12 +12,24 @@ export class LoadYears implements Action {
 }
 export class LoadYearsFail implements Action {
   readonly type = LOAD_YEARS_FAIL;
-  constructor(public payload: any){};
+  constructor(public payload: any) {}
 }
-export class LoadYearsSuccess implements Action{
+export class LoadYearsSuccess implements Action {
   readonly type = LOAD_YEARS_SUCCESS;
-  constructor(public payload: any){};  // Replace 'any' with interface
+  constructor(public payload: any) {} // Replace 'any' with interface
 }
+
+export const GetYearAction = createAction('[Fitment] Load Years');
+
+export const SuccessGetYearAction = createAction(
+  '[Fitment] Load Years Success',
+  props<{ payload: any }>()
+);
+
+export const ErrorYearAction = createAction(
+  '[Fitment] Load Years Fail',
+  props<Error>()
+);
 
 // Action types
 export type VehicleAction = LoadYears | LoadYearsFail | LoadYearsSuccess;
